@@ -1,6 +1,55 @@
-# Ripple TailwindCss Basic Template
 
-A minimal Ripple application template with TypeScript and Vite.
+# Ripple MDX
+
+Ripple MDX is a Vite plugin and component system that enables you to use MDX (Markdown + JSX) syntax with Ripple components. It allows you to write interactive documentation, content, and UI using `.ripple.mdx` files, combining Markdown and Ripple seamlessly.
+
+
+## Installation
+
+1. **Clone the repository using degit:**
+
+   ```bash
+   npx degit chandani-rathi/ripple-mdx my-ripple-mdx-app
+   cd my-ripple-mdx-app
+   npm install
+   ```
+
+2. **Start the development server:**
+
+   ```bash
+   npm start
+   ```
+
+3. **File usage:**
+   - Create `.ripple.mdx` files in your `src/` directory.
+   - Import and use them in your Ripple components:
+
+     ```ripple
+     import Hello from './Hello.ripple.mdx';
+     <Hello />
+     ```
+
+## Example
+
+`Hello.ripple.mdx`:
+
+```mdx
+import { Button } from '@/Button.ripple';
+export const year = 2025
+
+# Hello Ripple heading
+
+<Button>{"Click Button"}</Button>
+```
+
+## How It Works
+
+- The plugin transforms `.ripple.mdx` files into Ripple components at build time.
+- You can use Markdown, JSX-like syntax, and import/export variables.
+- Admonitions, directives, and interactive UI are supported.
+- Use with Tailwind CSS for styling.
+
+## Getting Started
 
 ## Getting Started
 
