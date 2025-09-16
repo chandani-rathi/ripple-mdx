@@ -46,7 +46,7 @@ export const defaultComponentMap = {
 	break: { name: 'br', from: '' },
 };
 
-export const enhancedComponentMap = {
+export const enhancedComponentMap = (componentDir) => ({
 	// --- Base Markdown (inherits from defaultComponentMap) ---
 	...defaultComponentMap,
 
@@ -64,7 +64,7 @@ export const enhancedComponentMap = {
 	// --- Admonitions / Callouts ---
 	admonition: {
 		name: 'Callout',
-		from: '@/components/Callout.ripple',
+		from: `${componentDir}/Callout.ripple`,
 		render: (node, renderChildren) => {
 			// node.data?.admonitionType provided by custom remark plugin
 			const type = node.data?.admonitionType || 'note';
@@ -75,7 +75,7 @@ export const enhancedComponentMap = {
 	// --- Badges ---
 	badge: {
 		name: 'Badge',
-		from: '@/components/Badge.ripple',
+		from: `${componentDir}/Badge.ripple`,
 		render: (node) => {
 			const text = node.value || '';
 			const color = node.data?.color || 'gray';
@@ -86,8 +86,8 @@ export const enhancedComponentMap = {
 	// --- Figures / Captions ---
 	figure: {
 		name: 'Figure',
-		from: '@my/ui',
-		render: (node, renderChildren) => `<figure>${renderChildren(node.children)}</figure>`,
+		from: `${componentDir}/Figure.ripple`,
+		render: (node, renderChildren) => `<Figure>${renderChildren(node.children)}</Figure>`,
 	},
 	figcaption: {
 		name: 'figcaption',
@@ -99,7 +99,7 @@ export const enhancedComponentMap = {
 	// --- Code Block with Title ---
 	codeBlock: {
 		name: 'CodeBlock',
-		from: '@my/ui',
+		from: `${componentDir}/CodeBlock.ripple`,
 		render: (node) => {
 			const title = node.meta?.match(/title="([^"]+)"/)?.[1] || '';
 			const lang = node.lang || 'plaintext';
@@ -110,7 +110,7 @@ export const enhancedComponentMap = {
 	// --- Mermaid / Diagrams ---
 	mermaid: {
 		name: 'Mermaid',
-		from: '@my/ui',
+		from: `${componentDir}/Mermaid.ripple`,
 		render: (node) => `<Mermaid>{\`${node.value}\`}</Mermaid>`,
 	},
 
@@ -127,15 +127,15 @@ export const enhancedComponentMap = {
 	// --- Tabs / Custom Directives ---
 	tabs: {
 		name: 'Tabs',
-		from: '@my/ui',
+		from: `${componentDir}/Tabs.ripple`,
 		render: (node, renderChildren) => `<Tabs>${renderChildren(node.children)}</Tabs>`,
 	},
 	tabItem: {
 		name: 'TabItem',
-		from: '@my/ui',
+		from: `${componentDir}/TabItem.ripple`,
 		render: (node, renderChildren) => {
 			const label = node.data?.label || 'Tab';
 			return `<TabItem label="${label}">${renderChildren(node.children)}</TabItem>`;
 		},
 	},
-};
+});

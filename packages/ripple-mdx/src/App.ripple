@@ -1,7 +1,9 @@
-import Hello from  "./Hello.ripple.mdx";
+import Hello from  "./Hell.ripple.mdx";
 
 export default component App() {
 	<div class="min-h-screen bg-gradient-to-br from-gray-100 to-white p-8 flex flex-col items-center justify-center">
-		<Hello />
+		<article  class="prose prose-stone lg:prose-lg xl:prose-xl max-w-none">
+			<Hello components={{}}  />
+		</article >
 	</div>
 }

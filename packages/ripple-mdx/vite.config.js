@@ -6,7 +6,16 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
 	base: './',
-	plugins: [ripple(), tailwindcss(), rippleMdxPlugin({ logOutput: true })],
+	plugins: [
+		ripple(), 
+		tailwindcss(), 
+		rippleMdxPlugin({ 
+			logOutput: true, 
+			componentMap: {
+			}, 
+			componentDir: "@/components/mdx"
+		 })
+	],
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),

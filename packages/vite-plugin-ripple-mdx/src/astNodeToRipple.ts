@@ -4,10 +4,20 @@ import remarkMdx from 'remark-mdx';
 import remarkAdmonitions from './remarkAdmonitions';
 import { enhancedComponentMap } from './componentMap';
 
-export async function mdxToRipple(source, { logOutput, componentMap = {} } = {}) {
+interface RenderFunction {
+ render: (node: Node, render: RenderFunction) => string
+}
+
+export interface MdxToRippleOptions {
+	logOutput?: boolean;
+	componentMap?: {[mdxType: string]: { name: string, from: "string"} & RenderFunction}
+	componentDir?: string;
+}
+
+export async function mdxToRipple(source, { logOutput, componentMap, componentDir}: MdxToRippleOptions) {
 	const processor = unified()
 		.use(remarkParse)
-		// .use(remarkGFM)
+		//.use(remarkGFM)
 		//.use(remarkDirective)
         //.use(remarkRehype)
 		.use(remarkMdx)        
@@ -15,10 +25,13 @@ export async function mdxToRipple(source, { logOutput, componentMap = {} } = {})
 	const tree = processor.parse(source)
     const ast = await processor.run(tree)
 
-	const { render, getImports } = createAstToRippleRenderer({
-		...enhancedComponentMap,
+	const componentList = enhancedComponentMap(componentDir || "@/components/mdx")
+	const mergedComponentList = {
+		...componentList,
 		...(componentMap || {}),
-	});
+	}
+
+	const { render, getImports } = createAstToRippleRenderer(mergedComponentList);
 
 	const imports = [];
 	const body = [];
@@ -50,7 +63,7 @@ ${imports.length ? imports.join('\n') + '\n\n' : ''}` +
 }
 
 function createAstToRippleRenderer(componentMap = {}) {
-	const usedComponents = new Set();
+	const usedComponents = new Set<{name, from, render}>();
 
 	function render(node) {
 		const mapEntry = componentMap[node.type];
@@ -64,7 +77,7 @@ function createAstToRippleRenderer(componentMap = {}) {
 			if (mapEntry.render) {
 				return mapEntry.render(
                     node, 
-                    (children) => children.map((n) => render(n, null)).join("\n")
+                    (children) => children.map((n) => render(n)).join("\n")
                 );
 			}
             const props = buildProps(node)

@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"target": "ESNext",
 		"module": "ESNext",
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
@@ -11,8 +10,5 @@
 		"jsxImportSource": "ripple",
 		"noEmit": true,
 		"isolatedModules": true,
-		"paths": {
-			"@/*": ["./src/*"]
-		},
-	}
+	},
 }

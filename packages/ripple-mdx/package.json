@@ -1,10 +1,10 @@
 {
   "name": "ripple-mdx",
   "version": "1.0.0",
-	"type": "module",
-	"engines": {
-		"node": ">=20.0.0"
-	},
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -17,6 +17,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.13",
     "prettier": "^3.6.2",
     "prettier-plugin-ripple": "0.2.43",
