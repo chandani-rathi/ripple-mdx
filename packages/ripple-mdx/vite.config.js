@@ -1,10 +1,12 @@
-import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import { ripple } from 'vite-plugin-ripple';
 import path from 'path';
+import rippleMdxPlugin from 'vite-plugin-ripple-mdx';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-	plugins: [ripple(), tailwindcss()],
+	base: './',
+	plugins: [ripple(), tailwindcss(), rippleMdxPlugin({ logOutput: true })],
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),

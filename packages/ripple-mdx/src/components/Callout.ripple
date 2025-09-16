@@ -1,0 +1,29 @@
+import type { Component } from 'ripple';
+
+type CalloutType = 'note' | 'tip' | 'info' | 'warning' | 'important' | 'caution';
+
+interface CalloutProps {
+	type?: CalloutType;
+	$children: Component;
+}
+
+const typeStyles: Record<CalloutType, string> = {
+	note: 'bg-blue-50 border-blue-400 text-blue-800',
+	info: 'bg-blue-50 border-blue-300 text-blue-800',
+	tip: 'bg-green-50 border-green-400 text-green-800',
+	warning: 'bg-yellow-50 border-yellow-400 text-yellow-800',
+	important: 'bg-purple-50 border-purple-400 text-purple-800',
+	caution: 'bg-red-50 border-red-400 text-red-800',
+};
+
+export component Callout({ type, $children }) {
+	const styles = typeStyles[type] || typeStyles.note;
+
+	<div class={`flex items-start gap-3 border-l-4 p-4 rounded-md ${styles}`}>
+        <div class='flex-1 text-sm'>
+            if ($children) {
+                <$children />
+            }
+        </div>
+    </div>
+}
