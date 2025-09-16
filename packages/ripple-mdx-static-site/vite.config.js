@@ -3,7 +3,7 @@ import { ripple } from 'vite-plugin-ripple';
 import path from 'path';
 import rippleMdxPlugin from 'vite-plugin-ripple-mdx';
 import tailwindcss from '@tailwindcss/vite';
-import rippleRouterHashPlugin from 'vite-plugin-ripple-router-hash';
+import rippleRouterHashPlugin from './rippleRoutesPlugin';
 
 export default defineConfig({
 	base: './',
