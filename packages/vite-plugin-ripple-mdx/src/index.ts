@@ -1,14 +1,15 @@
 import { compile } from 'ripple/compiler';
 import { mdxToRipple } from './astNodeToRipple';
-import fs from 'node:fs';
+import fs from "node:fs";
+import path from "node:path";
 
 interface RenderFunction {
- render: (node: Node, render: RenderFunction) => string
+	render: (node: Node, render: RenderFunction) => string
 }
 
 export interface RippleMdxPluginOptions {
 	logOutput?: boolean;
-	componentMap?: {[mdxType: string]: { name: string, from: "string"} & RenderFunction}
+	componentMap?: { [mdxType: string]: { name: string, from: "string" } & RenderFunction }
 	componentDir?: string;
 }
 
@@ -43,6 +44,22 @@ export default function rippleMdxPlugin({ logOutput, componentMap, componentDir 
 	const api = {};
 	let root;
 	const cssCache = new Map();
+	const collectedData = [];
+
+
+	function writeCollectedData() {
+		
+		collectedData.forEach(
+			data => {
+				const relativePath = data.filename.replace(/^\/+/, "");
+				const outFile = path.resolve(process.cwd(),  "dist", relativePath.replace(".mdx", ""));
+				fs.mkdirSync(path.dirname(outFile), { recursive: true });
+				fs.writeFileSync(outFile, data.code, "utf-8");
+				console.log(`[ripple-mdx]: Wrote ${data.filename} entries to ${outFile}`);
+			}
+		)
+		
+	}
 
 	return {
 		name: 'vite-plugin-ripple-mdx',
@@ -58,14 +75,16 @@ export default function rippleMdxPlugin({ logOutput, componentMap, componentDir 
 				return cssCache.get(id);
 			}
 		},
-		
+
 		transform: {
 			filter: { id: /\.ripple\.mdx$/ },
 
 			async handler(code, id, opts) {
 				const filename = id.replace(root, '');
 				console.log("componentMap", componentMap)
-                const rippleSource = await mdxToRipple(code, { logOutput, componentMap, componentDir });
+				const rippleSource = await mdxToRipple(code, { logOutput, componentMap, componentDir });
+				collectedData.push({ filename: filename, code: rippleSource });
+				writeCollectedData()
 				const { js, css } = await compile(rippleSource, filename, id);
 				if (css !== '') {
 					const cssId = createVirtualImportId(filename, root, 'style');

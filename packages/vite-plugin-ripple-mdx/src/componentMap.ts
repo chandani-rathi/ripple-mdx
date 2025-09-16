@@ -1,3 +1,11 @@
+function escapeForTemplateLiteral(str) {
+  return str
+    .replace(/\\/g, '\\\\')   // escape backslashes
+    .replace(/`/g, '\\`')     // escape backticks
+    .replace(/\$\{/g, '\\${') // escape ${ so it doesn't evaluate
+    .replace(/}/g, '\\}');    // escape closing braces if needed
+}
+
 export const defaultComponentMap = {
 	heading: {
 		name: 'h',
@@ -26,7 +34,7 @@ export const defaultComponentMap = {
 		name: 'pre',
 		from: '',
 		render: (node) =>
-			`<pre><code${node.lang ? ` class="language-${node.lang}"` : ''}>${node.value}</code></pre>`,
+			`<pre><code${node.lang ? ` class="language-${node.lang}"` : ''}>${"{`"}${escapeForTemplateLiteral(node.value)}${"`}"}</code></pre>`,
 	},
 	link: {
 		name: 'a',

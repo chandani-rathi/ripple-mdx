@@ -55,10 +55,6 @@ ${imports.length ? imports.join('\n') + '\n\n' : ''}` +
 		`  \n` +
 		`}`;
 
-	if (logOutput) {
-		console.log(rippleSource);
-	}
-
 	return rippleSource;
 }
 

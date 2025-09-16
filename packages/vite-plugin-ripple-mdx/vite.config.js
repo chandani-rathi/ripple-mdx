@@ -31,7 +31,8 @@ export default defineConfig({
 				'ripple/internal/client',
 				'unified',
 				'remark-parse',
-				'remark-mdx'
+				'remark-mdx',
+				"node:fs", "node:path"
 			],
 		},
 	},
