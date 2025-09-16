@@ -1,0 +1,3 @@
+export component Page(props) {
+    <h1>{"Ripple Static Site"}</h1>
+}

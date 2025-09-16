@@ -1,0 +1,7 @@
+export component Button({ $children }) {
+    let $count = 0;
+	<button onClick={() => $count++}>
+        {$count}
+        <$children />
+    </button>
+}

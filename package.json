@@ -14,7 +14,8 @@
 		"build": "npm run build -w vite-plugin-ripple-mdx",
 		"dev:plugin": "npm run watch -w vite-plugin-ripple-mdx",
 		"dev:mdx": "npm run dev -w ripple-mdx",
-		"dev": "npx npm-run-all2 --parallel dev:plugin dev:mdx"
+		"dev": "npx npm-run-all2 --parallel dev:plugin dev:mdx",
+		"dev:site": "npm run dev -w ripple-mdx-static-site"
 	},
 	"license": "MIT"
 }

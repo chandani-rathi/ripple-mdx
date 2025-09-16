@@ -1,0 +1,7 @@
+export component Paragraph({ $children }) {
+	<p>
+		if($children) {
+			<$children />
+		}
+	</p>
+}
